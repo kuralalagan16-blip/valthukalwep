@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday | For Someone Special</title>
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --accent-color: #ff3e6d;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Custom cursor implementation below */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Background Effects --- */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1a0b2e 0%, #050505 100%);
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--accent-color);
+            filter: blur(150px);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float 20s infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+
+        /* --- Custom Cursor --- */
+        #cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        /* --- Layout & Sections --- */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Hero Section --- */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            text-align: center;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .italic { font-style: italic; color: var(--accent-color); }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* --- Bento Grid Section --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 300px);
+            gap: 1.5rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .bento-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: transform 0.3s ease;
+        }
+
+        .bento-item:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-color);
+        }
+
+        .bento-item.large { grid-column: span 2; }
+        .bento-item h3 { margin-bottom: 0.5rem; font-size: 1.5rem; }
+        .bento-item p { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* --- Interactive Letter --- */
+        .letter-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            padding: 4rem;
+            border-radius: 32px;
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        /* --- Interactive Cake --- */
+        .cake-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin-bottom: 2rem;
+        }
+
+        .candle {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 4px;
+        }
+
+        .flame {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 25px;
+            background: orange;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 20px orange;
+            animation: flicker 0.1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from { transform: translateX(-50%) scale(1); }
+            to { transform: translateX(-50%) scale(1.1); }
+        }
+
+        .btn-wish {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(255, 62, 109, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-wish:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 62, 109, 0.5);
+        }
+
+        /* --- Responsive Tweaks --- */
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+            .bento-item.large { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div class="gradient-bg">
+        <div class="orb" style="top: 10%; left: 10%;"></div>
+        <div class="orb" style="bottom: 10%; right: 10%; background: #6a3eff;"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section>
+        <div class="reveal">
+            <p class="subtitle">A special day for a special soul</p>
+            <h1>Happy<br><span class="italic">Birthday</span></h1>
+            <p style="margin-top: 2rem; opacity: 0.5;">Scroll to begin our journey ↓</p>
+        </div>
+    </section>
+
+    <!-- Bento Memories Section -->
+    <section>
+        <div class="reveal">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 3rem; text-align: center;">Moments worth <span class="italic">celebrating</span></h2>
+            <div class="bento-grid">
+                <div class="bento-item large">
+                    <h3>Your Smile</h3>
+                    <p>The kind of light that makes 2025 feel like a better year already.</p>
+                </div>
+                <div class="bento-item">
+                    <h3>The Laughter</h3>
+                    <p>My favorite soundtrack.</p>
+                </div>
+                <div class="bento-item">
+                    <h3>The Support</h3>
+                    <p>Always there when I needed it.</p>
+                </div>
+                <div class="bento-item large" style="background: linear-gradient(45deg, #ff3e6d22, #6a3eff22);">
+                    <h3>Infinite Memories</h3>
+                    <p>This is just the beginning of everything we're going to do.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emotional Message -->
+    <section>
+        <div class="reveal letter-card">
+            <h2 style="margin-bottom: 2rem; font-family: 'Playfair Display';">A Letter to You</h2>
+            <p>
+                To the person who makes the world feel smaller and warmer just by being in it. 
+                Today isn't just about another year passing—it's about celebrating the incredible person 
+                you've become. You are my favorite "everything." 
+                <br><br>
+                May your day be filled with as much joy as you give to everyone around you. 
+                Keep shining, keep being unapologetically you, and know that I'm always 
+                your biggest fan.
+            </p>
+        </div>
+    </section>
+
+    <!-- Interactive Wish Section -->
+    <section id="wish-section">
+        <div class="reveal" style="text-align: center;">
+            <div class="cake-container">
+                <!-- SVG Cake for performance and crispness -->
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="40" y="100" width="120" height="60" rx="10" fill="#ff3e6d" />
+                    <rect x="50" y="70" width="100" height="40" rx="10" fill="#ff6b91" />
+                    <path d="M40 100 Q 100 120 160 100" fill="none" stroke="white" stroke-width="2" opacity="0.3"/>
+                </svg>
+                <div class="candle">
+                    <div class="flame" id="flame"></div>
+                </div>
+            </div>
+            <h2 id="wish-text">Make a wish...</h2>
+            <button class="btn-wish" onclick="blowCandle()">Blow out the candle</button>
+        </div>
+    </section>
+
+    <footer style="padding: 4rem; text-align: center; color: var(--text-secondary); font-size: 0.8rem; letter-spacing: 2px;">
+        DESIGNED FOR YOU • 2025
+    </footer>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti" style="position: fixed; top: 0; left: 0; pointer-events: none; z-index: 100;"></canvas>
+
+    <script>
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Scale cursor on hover
+        document.querySelectorAll('button, .bento-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(3)');
+            el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+        });
+
+        // Intersection Observer for Reveal Animations
+        const observerOptions = { threshold: 0.2 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Interactive Wish Function
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            const wishText = document.getElementById('wish-text');
+            const btn = document.querySelector('.btn-wish');
+            
+            flame.style.display = 'none';
+            wishText.innerText = "May all your dreams come true! ✨";
+            btn.innerText = "Happy Birthday!";
+            btn.disabled = true;
+
+            startConfetti();
+        }
+
+        // Simple 2025 Confetti System
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        function startConfetti() {
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: canvas.height + Math.random() * 100,
+                    size: Math.random() * 8 + 4,
+                    color: `hsl(${Math.random() * 360}, 70%, 60%)`,
+                    speed: Math.random() * 5 + 2,
+                    angle: Math.random() * 6.28
+                });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.y -= p.speed;
+                p.x += Math.sin(p.angle) * 2;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, 6.28);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateConfetti);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
